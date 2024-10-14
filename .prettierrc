@@ -1,0 +1,10 @@
+{
+	"useTabs": true,
+	"tabWidth": 4,
+	"printWidth": 120,
+	"proseWrap": "preserve",
+	"semi": true,
+	"singleQuote": false,
+	"experimentalTernaries": true,
+	"plugins": ["prettier-plugin-tailwindcss"]
+}

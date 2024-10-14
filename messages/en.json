@@ -1,0 +1,19 @@
+{
+	"homepage": {
+		"titles": {
+			"skills": "Skills",
+			"recentPosts": "Recent Posts",
+			"recentProjects": "Recent Projects"
+		},
+		"intro": {
+			"title": "Hey, I'm Niels.",
+			"description": "I'm a student web developer at Avans Hogeschool in Breda, The Netherlands. I love to build things for the web and learn new things every day."
+		}
+	},
+	"post": {
+		"back": "Back to posts"
+	},
+	"project": {
+		"back": "Back to projects"
+	}
+}

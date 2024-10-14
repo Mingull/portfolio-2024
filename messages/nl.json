@@ -1,0 +1,19 @@
+{
+	"homepage": {
+		"titles": {
+			"skills": "Vaardigheden",
+			"recentPosts": "Recente Berichten",
+			"recentProjects": "Recente Projecten"
+		},
+		"intro": {
+			"title": "Hey, ik ben Niels.",
+			"description": "Ik ben student webontwikkelaar aan de Avans Hogeschool in Breda. Ik hou ervan om dingen voor het web te bouwen en elke dag nieuwe dingen te leren."
+		}
+	},
+	"post": {
+		"back": "Terug naar berichten"
+	},
+	"project": {
+		"back": "Terug naar projecten"
+	}
+}
