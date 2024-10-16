@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs/promises";
 import matter from "gray-matter";
+import slugify from "slugify";
 
 const rootDirectory = path.join(process.cwd(), "src", "content", "docs");
 
@@ -15,28 +16,27 @@ export type DocMetadata = {
 	image?: string;
 	author?: string;
 	publishedAt?: string;
-	tableOfContents?: string[];
+	href?: string;
+	category?: string;
 	slug: string;
 };
 
-export async function getDocBySlug(slug: string | string[]): Promise<Doc | null> {
-	console.log({ slug });
+export async function getDocBySlug(slug?: string[]): Promise<Doc | null> {
 	try {
-		if (typeof slug === "string") {
-			const filePath = path.join(rootDirectory, `${slug}.mdx`);
-			const fileContent = await fs.readFile(filePath, "utf-8");
+		const filePath =
+			!slug || slug.length === 0 ? path.join(rootDirectory, "index.mdx")
+			: slug.length === 1 ? path.join(rootDirectory, `${slug[0]}/index.mdx`)
+			: path.join(rootDirectory, slug[0], `${slug[1]}.mdx`);
 
-			const { data, content } = matter(fileContent);
+		const fileContent = await fs.readFile(filePath, "utf-8");
 
-			return { metadata: { ...data, slug }, content };
-		} else {
-			const filePath = path.join(rootDirectory, slug[0], `${slug[1]}.mdx`);
-			const fileContent = await fs.readFile(filePath, "utf-8");
+		const { data, content } = matter(fileContent);
+		const category =
+			filePath.includes("\\") && !filePath.includes("index.mdx") ?
+				filePath.split(/\\/g).slice(-2).shift() + ""
+			:	"getting-started";
 
-			const { data, content } = matter(fileContent);
-
-			return { metadata: { ...data, slug: slug.join("/") }, content };
-		}
+		return { metadata: { ...data, slug: slugify(data.title), category }, content };
 	} catch (e) {
 		console.log(e);
 		return null;
@@ -44,11 +44,10 @@ export async function getDocBySlug(slug: string | string[]): Promise<Doc | null>
 }
 
 export async function getDocs(limit?: number) {
-	const files = await fs.readdir(rootDirectory);
+	const filePaths = await fs.readdir(rootDirectory, { recursive: true });
 
-	// get the posts sorted by date in descending order using the metadata from the posts
-	const docs = (await Promise.all(files.map(async (file) => await getDocMetadata(file)))).sort((a, b) =>
-		new Date(a.publishedAt ?? "") < new Date(b.publishedAt ?? "") ? 1 : -1,
+	const docs = await Promise.all(
+		filePaths.filter((file) => file.endsWith(".mdx")).map(async (file) => await getDocMetadata(file)),
 	);
 
 	if (limit) {
@@ -58,10 +57,44 @@ export async function getDocs(limit?: number) {
 }
 
 export async function getDocMetadata(filepath: string): Promise<DocMetadata> {
-	const slug = filepath.replace(/\.mdx$/, "");
 	const filePath = path.join(rootDirectory, filepath);
+	const category =
+		filepath.includes("\\") && !filepath.includes("index.mdx") ?
+			filepath.split(/\\/g).shift() + ""
+		:	"getting-started";
+
 	const fileContent = await fs.readFile(filePath, "utf-8");
+
 	const { data } = matter(fileContent);
 
-	return { ...data, slug };
+	const slug = slugify(`${data.title}`, { lower: true });
+
+	let href = "/";
+	if (filepath.includes("\\")) {
+		href = filepath.includes("index.mdx") ? `/${filepath.split(/\\/g).shift()}` : `/${category}/${slug}`;
+	} else if (!filepath.includes("index.mdx")) {
+		href = `/${slug}`;
+	}
+
+	return {
+		...data,
+		slug,
+		category,
+		href,
+	};
+}
+
+export async function getDocCategories() {
+	const filePaths = await fs.readdir(rootDirectory, { recursive: true });
+
+	const categories = new Set<string>();
+
+	filePaths.forEach((file) => {
+		if (file.endsWith(".mdx")) {
+			const category = file.includes("\\") ? file.split(/\\/g).shift() + "" : "getting-started";
+			categories.add(category);
+		}
+	});
+
+	return Array.from(categories);
 }

@@ -1,20 +1,21 @@
 import MDXContent from "@/components/mdx-content";
-import { Link } from "@/i18n/routing";
+import { Link, routing } from "@/i18n/routing";
 import { getProjectBySlug, getProjects } from "@/lib/projects";
 import { formatDate } from "@/lib/utils";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
 	const projects = await getProjects();
 	const slugs = projects.map((project) => ({ slug: project.slug }));
-	return slugs;
+	return slugs.flatMap((slug) => routing.locales.map((locale) => ({ ...slug, locale })));
 }
 
-export default async function Project({ params }: { params: { slug: string } }) {
-	const { slug } = params;
+export default async function Project({ params }: { params: { slug: string; locale: string } }) {
+	const { slug, locale } = params;
+	unstable_setRequestLocale(locale);
 	const project = await getProjectBySlug(slug);
 	const t = await getTranslations("project");
 
@@ -23,7 +24,7 @@ export default async function Project({ params }: { params: { slug: string } }) 
 	}
 
 	const { metadata, content } = project;
-	const { title, image, author, publishedAt} = metadata;
+	const { title, image, author, publishedAt } = metadata;
 
 	return (
 		<section className="py-24">
@@ -49,7 +50,7 @@ export default async function Project({ params }: { params: { slug: string } }) 
 				</header>
 
 				<main className="prose mt-16 dark:prose-invert">
-					<MDXContent source={content} components={} />
+					<MDXContent source={content} />
 				</main>
 
 				{/* <footer className="mt-16">

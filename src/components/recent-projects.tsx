@@ -1,8 +1,7 @@
-import { getProjects } from "@/lib/projects";
-import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import Projects from "./projects";
+import { getProjects } from "@/lib/projects";
 import { getTranslations } from "next-intl/server";
+import Projects from "./projects";
 
 export default async function RecentProjects() {
 	const projects = await getProjects(2);

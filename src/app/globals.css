@@ -130,4 +130,8 @@ body {
 			content: "";
 		}
 	}
+	/* remove margin from .prose h3 */
+	.prose h3 {
+		@apply my-0 text-base font-normal;
+	}
 }

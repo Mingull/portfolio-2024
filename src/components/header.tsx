@@ -13,7 +13,7 @@ export default function Header() {
 			<nav className="container flex max-w-5xl items-center justify-between xl:max-w-screen-2xl">
 				<div className="flex gap-8">
 					<Link href="/" className="font-serif text-2xl font-bold">
-						NP
+						Mingull
 					</Link>
 					<ul className="flex items-center gap-3 text-sm font-light text-muted-foreground sm:gap-10">
 						<HeaderLink href="/posts">Posts</HeaderLink>

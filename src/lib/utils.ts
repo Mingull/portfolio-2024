@@ -12,3 +12,7 @@ export function formatDate(date: string) {
 		day: "numeric",
 	});
 }
+
+export function formatTitle(title: string) {
+	return title.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+}

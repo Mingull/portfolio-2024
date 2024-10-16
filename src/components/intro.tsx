@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import authorImage from "@/../public/images/authors/niels.jpg";
 import { useTranslations } from "next-intl";

@@ -1,20 +1,21 @@
 import MDXContent from "@/components/mdx-content";
-import { Link } from "@/i18n/routing";
+import { Link, routing } from "@/i18n/routing";
 import { getPostBySlug, getPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
 	const posts = await getPosts();
 	const slugs = posts.map((post) => ({ slug: post.slug }));
-	return slugs;
+	return slugs.flatMap((slug) => routing.locales.map((locale) => ({ ...slug, locale })));
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
-	const { slug } = params;
+export default async function Post({ params: { slug, locale } }: { params: { slug: string; locale: string } }) {
+	unstable_setRequestLocale(locale);
+
 	const post = await getPostBySlug(slug);
 	const t = await getTranslations("post");
 
