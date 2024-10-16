@@ -28,6 +28,7 @@ export default function NewsletterForm() {
 	});
 
 	const processForm: SubmitHandler<Inputs> = async (data) => {
+		return toast.warning("This feature is disabled for now. Please try again later.");
 		const result = await subscribe(data);
 
 		if (result?.error) {
