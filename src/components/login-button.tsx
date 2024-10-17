@@ -1,27 +1,27 @@
 "use client";
-import { UserButton, useUser } from "@clerk/nextjs";
-const DotIcon = () => {
-	return (
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-			<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
-		</svg>
-	);
-};
+import { useSession } from "@/lib/auth-client";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { DropdownMenu, DropdownMenuTrigger } from "./ui/dropdown-menu";
+// const DotIcon = () => {
+// 	return (
+// 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+// 			<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
+// 		</svg>
+// 	);
+// };
 export default function LoginButton() {
-	const { isSignedIn } = useUser();
-	if (isSignedIn)
+	const { data: session, isPending } = useSession();
+	if (isPending) return null;
+	if (session)
 		return (
-			<UserButton>
-				<UserButton.MenuItems>
-					<UserButton.Action label="Help" labelIcon={<DotIcon />} open="help" />
-				</UserButton.MenuItems>
-				<UserButton.UserProfilePage label="Help" labelIcon={<DotIcon />} url="help">
-					<div>
-						<h1>Help Page</h1>
-						<p>This is the custom help page</p>
-					</div>
-				</UserButton.UserProfilePage>
-			</UserButton>
+			<DropdownMenu>
+				<DropdownMenuTrigger>
+					<Avatar>
+						<AvatarImage src={session.user.image} />
+						<AvatarFallback>{session.user.name}</AvatarFallback>
+					</Avatar>
+				</DropdownMenuTrigger>
+			</DropdownMenu>
 		);
 	return null;
 	//  (

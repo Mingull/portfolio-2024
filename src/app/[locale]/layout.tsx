@@ -2,7 +2,6 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Providers from "@/components/providers";
 import { cn } from "@/lib/utils";
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -29,13 +28,11 @@ export default async function RootLayout({
 		<html lang={locale} suppressHydrationWarning>
 			<body className={cn("flex min-h-screen flex-col font-sans antialiased", inter.variable, playFair.variable)}>
 				<NextIntlClientProvider messages={messages}>
-					<ClerkProvider>
-						<Providers>
-							<Header />
-							<main className="grow">{children}</main>
-							<Footer />
-						</Providers>
-					</ClerkProvider>
+					<Providers>
+						<Header />
+						<main className="grow">{children}</main>
+						<Footer />
+					</Providers>
 				</NextIntlClientProvider>
 			</body>
 		</html>

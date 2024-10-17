@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1729113929929,
+      "tag": "0000_easy_sabretooth",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1729162287002,
+      "tag": "0001_normal_imperial_guard",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1729162769360,
+      "tag": "0002_open_roulette",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1729162873375,
+      "tag": "0003_faithful_slipstream",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,25 +1,25 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { authMiddleware } from "better-auth/next-js";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
+import { NextResponse } from "next/server";
 
 const handleI18nRouting = createMiddleware(routing);
 
-const isProtectedRoute = createRouteMatcher(["/:locale/dashboard(.*)", "/:locale/docs(.*)"]);
+export default authMiddleware({
+	redirectTo: "/sign-in",
+	async customRedirect(session, request) {
+		const baseURL = request.nextUrl.origin;
 
-export default clerkMiddleware((auth, req) => {
-	if (isProtectedRoute(req)) auth().protect();
+		const [, locale, ...segments] = request.nextUrl.pathname.split("/");
 
-	return handleI18nRouting(req);
+		if (locale != null && segments.join("/") === "docs" && !session) {
+			return NextResponse.redirect(new URL(locale + "/sign-in", baseURL));
+		}
+
+		return handleI18nRouting(request);
+	},
 });
 
 export const config = {
-	matcher: [
-		"/",
-		// Skip Next.js internals and all static files, unless found in search params
-		"/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-		// Always run for API routes
-		"/(api|trpc)(.*)",
-		// Match only internationalized pathnames
-		"/(nl|en)/:path*",
-	],
+	matcher: ["/", "/(nl|en)/:path*"],
 };
