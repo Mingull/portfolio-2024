@@ -1,7 +1,7 @@
 import { PostMetadata } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 
 export default function Posts({ posts }: { posts: PostMetadata[] }) {
 	return (

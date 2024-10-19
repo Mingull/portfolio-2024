@@ -1,6 +1,6 @@
 import MDXContent from "@/components/mdx-content";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 import { getDocBySlug, getDocCategories, getDocs } from "@/lib/docs";
 import { formatTitle } from "@/lib/utils";
 

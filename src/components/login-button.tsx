@@ -1,26 +1,49 @@
 "use client";
-import { useSession } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
+import { LogOutIcon, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { DropdownMenu, DropdownMenuTrigger } from "./ui/dropdown-menu";
-// const DotIcon = () => {
-// 	return (
-// 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-// 			<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
-// 		</svg>
-// 	);
-// };
+import { Button } from "./ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Icons } from "./ui/icons";
 export default function LoginButton() {
 	const { data: session, isPending } = useSession();
-	if (isPending) return null;
+	if (isPending)
+		return (
+			<Button size="sm" variant="ghost">
+				<Icons.spinner className="size-4 animate-spin" />
+				<span className="sr-only">loading user button</span>
+			</Button>
+		);
 	if (session)
 		return (
 			<DropdownMenu>
 				<DropdownMenuTrigger>
-					<Avatar>
+					<Avatar className="">
 						<AvatarImage src={session.user.image} />
 						<AvatarFallback>{session.user.name}</AvatarFallback>
 					</Avatar>
+					<span className="sr-only">user button</span>
 				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuLabel>My Account</DropdownMenuLabel>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem>
+						<UserIcon className="mr-2 size-4" />
+						Profile
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem onClick={async () => await signOut()}>
+						<LogOutIcon className="mr-2 size-4" />
+						logout
+					</DropdownMenuItem>
+				</DropdownMenuContent>
 			</DropdownMenu>
 		);
 	return null;

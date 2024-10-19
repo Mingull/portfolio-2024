@@ -3,10 +3,8 @@ import Header from "@/components/header";
 import Providers from "@/components/providers";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { Inter, Playfair_Display } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const playFair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
@@ -23,17 +21,17 @@ export default async function RootLayout({
 	children: React.ReactNode;
 	params: { locale: string };
 }>) {
-	const messages = await getMessages();
+	// const messages = await getMessages();
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body className={cn("flex min-h-screen flex-col font-sans antialiased", inter.variable, playFair.variable)}>
-				<NextIntlClientProvider messages={messages}>
-					<Providers>
-						<Header />
-						<main className="grow">{children}</main>
-						<Footer />
-					</Providers>
-				</NextIntlClientProvider>
+				{/* <NextIntlClientProvider messages={messages}> */}
+				<Providers>
+					<Header />
+					<main className="grow">{children}</main>
+					<Footer />
+				</Providers>
+				{/* </NextIntlClientProvider> */}
 			</body>
 		</html>
 	);

@@ -1,19 +1,20 @@
 "use client";
-import * as Clerk from "@clerk/elements/common";
-import * as SignUp from "@clerk/elements/sign-up";
-import { Link } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/ui/icons";
-import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
+	const router = useRouter();
+	useEffect(() => {
+		toast.warning("This page has been disabled for security reasons.");
+		setTimeout(() => {
+			router.push("/sign-in");
+		}, 2000);
+	}, [router]);
 	return (
 		<section className="py-24">
 			<div className="container flex max-w-3xl justify-center xl:max-w-4xl">
-				<SignUp.Root>
+				{/* <SignUp.Root>
 					<Clerk.Loading>
 						{(isGlobalLoading) => (
 							<>
@@ -241,7 +242,7 @@ export default function SignUpPage() {
 							</>
 						)}
 					</Clerk.Loading>
-				</SignUp.Root>
+				</SignUp.Root> */}
 			</div>
 		</section>
 	);

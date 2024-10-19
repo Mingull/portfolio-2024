@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 import { sendEmail } from "@/lib/actions";
 import { ContactFormSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -109,7 +109,7 @@ export default function ContactForm() {
 					</div>
 					<p className="mt-4 text-xs text-muted-foreground">
 						By submitting this form, I agree to the{" "}
-						<Link href="/privacy" className="font-bold">
+						<Link href="/" className="font-bold">
 							privacy&nbsp;policy.
 						</Link>
 					</p>

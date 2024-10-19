@@ -1,11 +1,10 @@
 "use client";
-import { Link } from "@/i18n/routing";
-import LanguageSelector from "./language-selector";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { ComponentProps } from "react";
 import LoginButton from "./login-button";
 import ThemeToggle from "./theme-toggle";
-import { ComponentProps } from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 export default function Header() {
 	return (
@@ -24,7 +23,7 @@ export default function Header() {
 				</div>
 
 				<div className="flex">
-					<LanguageSelector />
+					{/* <LanguageSelector /> */}
 					<ThemeToggle />
 					<LoginButton />
 				</div>

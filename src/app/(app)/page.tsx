@@ -20,3 +20,4 @@ export default function Home() {
 		</section>
 	);
 }
+export const dynamic = "force-dynamic";

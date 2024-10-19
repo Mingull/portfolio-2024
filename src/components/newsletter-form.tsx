@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 import { toast } from "sonner";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -74,7 +74,7 @@ export default function NewsletterForm() {
 						<div>
 							<p className="text-xs text-muted-foreground">
 								We care about your data. Read our{" "}
-								<Link href="/privacy" className="font-bold">
+								<Link href="/" className="font-bold">
 									privacy&nbsp;policy.
 								</Link>
 							</p>

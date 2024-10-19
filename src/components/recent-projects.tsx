@@ -1,14 +1,12 @@
-import { Link } from "@/i18n/routing";
 import { getProjects } from "@/lib/projects";
-import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 import Projects from "./projects";
 
 export default async function RecentProjects() {
 	const projects = await getProjects(2);
-	const t = await getTranslations("homepage.titles");
 	return (
 		<section className="pb-24">
-			<h2 className="title mb-12">{t("recentProjects")}</h2>
+			<h2 className="title mb-12">Recent Projects</h2>
 			<Projects project={projects} />
 
 			<Link

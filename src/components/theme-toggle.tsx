@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { Button } from "./ui/button";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
+import { Icons } from "./ui/icons";
 
 export default function ThemeToggle() {
 	const { setTheme, resolvedTheme } = useTheme();
@@ -12,7 +13,13 @@ export default function ThemeToggle() {
 
 	useEffect(() => setMounted(true), []);
 
-	if (!mounted) return null;
+	if (!mounted)
+		return (
+			<Button size="sm" variant="ghost">
+				<Icons.spinner className="size-4 animate-spin" />
+				<span className="sr-only">loading theme toggle</span>
+			</Button>
+		);
 
 	return (
 		<Button size="sm" variant="ghost" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>

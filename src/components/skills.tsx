@@ -1,9 +1,7 @@
 "use client";
-import { useTranslations } from "next-intl";
 import { Progress } from "./ui/progress";
 
 export default function Skills() {
-	const t = useTranslations("homepage.titles");
 	const skills = [
 		{ name: "Typescript", experience: 90, years: 3 },
 		{ name: "React", experience: 80, years: 3 },
@@ -14,7 +12,7 @@ export default function Skills() {
 	];
 	return (
 		<section className="pb-24">
-			<h2 className="title mb-12">{t("skills")}</h2>
+			<h2 className="title mb-12">Vaardigheden</h2>
 
 			<ul className="flex flex-col gap-4">
 				{skills.map((skill) => (

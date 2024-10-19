@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { signIn } from "@/lib/auth-client";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function SignInPage() {
-	// const [isLoading, setIsLoading] = useState(false);
+	const [isGithubLoading, setGithubLoading] = useState(false);
+	const [isDiscordLoading, setDiscordLoading] = useState(false);
 	return (
 		<section className="py-24">
 			<div className="container flex max-w-3xl justify-center xl:max-w-4xl">
@@ -20,24 +23,52 @@ export default function SignInPage() {
 							<Button
 								size="sm"
 								variant="outline"
-								onClick={async () =>
-									await signIn.social({
-										provider: "github",
-									})
-								}
+								onClick={async () => {
+									console.log("login with github");
+									await signIn.social(
+										{
+											provider: "github",
+										},
+										{
+											onSuccess: () => setGithubLoading(false),
+											onRequest: () => setGithubLoading(true),
+											onError: () => {
+												setGithubLoading(false);
+												toast.error("Failed to sign in with GitHub");
+											},
+										},
+									);
+								}}
 							>
-								<Icons.gitHub className="mr-2 h-4 w-4" /> GitHub
+								{isGithubLoading ?
+									<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+								:	<Icons.gitHub className="mr-2 h-4 w-4" />}
+								GitHub
 							</Button>
 							<Button
 								size="sm"
 								variant="outline"
-								onClick={async () =>
-									await signIn.social({
-										provider: "discord",
-									})
-								}
+								onClick={async () => {
+									console.log("login with discord");
+									await signIn.social(
+										{
+											provider: "discord",
+										},
+										{
+											onSuccess: () => setDiscordLoading(false),
+											onRequest: () => setDiscordLoading(true),
+											onError: () => {
+												setDiscordLoading(false);
+												toast.error("Failed to sign in with Discord");
+											},
+										},
+									);
+								}}
 							>
-								<Icons.discord className="mr-2 h-4 w-4" /> Discord
+								{isDiscordLoading ?
+									<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+								:	<Icons.discord className="mr-2 h-4 w-4" />}
+								Discord
 							</Button>
 						</div>
 						{/* <p className="flex items-center gap-x-3 text-sm text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">

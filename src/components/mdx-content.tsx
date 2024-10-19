@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { JSX } from "react";
 import rehypeSlug from "rehype-slug";

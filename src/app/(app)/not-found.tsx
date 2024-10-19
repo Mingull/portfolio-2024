@@ -1,5 +1,5 @@
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 
 export default function NotFound() {
 	return (

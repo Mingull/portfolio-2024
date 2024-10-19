@@ -1,7 +1,7 @@
 import { ProjectMetadata } from "@/lib/projects";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import Link  from "next/link";
 
 export default function Projects({ project }: { project: ProjectMetadata[] }) {
 	return (
